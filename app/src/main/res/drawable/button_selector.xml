@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- 버튼이 Hover 상태일 때 -->
+    <item android:state_hovered="true">
+        <shape>
+            <solid android:color="#6E98E3" /> <!-- Hover 시 배경 색상 설정 -->
+            <corners android:radius="6dp" /> <!-- 테두리를 둥글게 만들기 위해 반지름 설정 -->
+            <stroke
+                android:width="1dp"
+                android:color="#6E98E3" />
+        </shape>
+    </item>
+    <!-- 버튼이 Active 상태일 때 -->
+    <item android:state_pressed="true">
+        <shape>
+            <solid android:color="#A4C4FF" /> <!-- Active 시 배경 색상 설정 -->
+            <corners android:radius="6dp" /> <!-- 테두리를 둥글게 만들기 위해 반지름 설정 -->
+            <stroke
+                android:width="1dp"
+                android:color="#A4C4FF" />
+        </shape>
+    </item>
+    <!-- 기본 상태 -->
+    <item>
+        <shape>
+            <solid android:color="#4A7EDC" /> <!-- 기본 배경 색상 설정 -->
+            <corners android:radius="6dp" /> <!-- 테두리를 둥글게 만들기 위해 반지름 설정 -->
+            <stroke
+                android:width="1dp"
+                android:color="#4A7EDC" />
+        </shape>
+    </item>
+</selector>
