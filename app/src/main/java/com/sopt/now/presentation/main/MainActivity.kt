@@ -7,6 +7,9 @@ import com.sopt.now.databinding.ActivityMainBinding
 import com.sopt.now.model.User
 
 class MainActivity : AppCompatActivity() {
+    companion object {
+        const val USER_DATA = "user_data"
+    }
     private val binding by lazy { ActivityMainBinding.inflate(layoutInflater) }
     private val viewModel: MainViewModel by viewModels()
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -18,18 +21,19 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun getUserInfo() {
-        val user: User? = intent.getParcelableExtra("user_data") // User 객체 받기
+        val user: User? = intent.getParcelableExtra(USER_DATA) // User 객체 받기
         if (user != null) {
             viewModel.setUserInfo(user) // ViewModel에 User 객체 적용
         }
     }
 
     private fun initUI() {
+        val user = viewModel.userInfo.value ?: return
         with(binding) {
-            tvMainNickname.text = viewModel.userInfo.value?.nickname
-            tvMainIdValue.text = viewModel.userInfo.value?.id
-            tvMainPwdValue.text = viewModel.userInfo.value?.pwd
-            tvMainMbtiValue.text = viewModel.userInfo.value?.mbti
+            tvMainNickname.text = user.nickname
+            tvMainIdValue.text = user.id
+            tvMainPwdValue.text = user.pwd
+            tvMainMbtiValue.text = user.mbti
         }
     }
 }
