@@ -1,14 +1,15 @@
 package com.sopt.now.compose.navigation
 
 object NavRoutes {
-    const val SignUp = "signup"
-    const val Login = "login"
-    const val Main = "main"
+    const val SIGN_UP = "signup"
+    const val LOGIN = "login"
+    const val MAIN = "main"
 }
 
 object NavArgs {
-    const val UserId = "userId"
-    const val UserPwd = "userPwd"
-    const val Nickname = "nickname"
-    const val Mbti = "mbti"
+    const val USER_ID = "userId"
+    const val USER_PWD = "userPwd"
+    const val NICKNAME = "nickname"
+    const val MBTI = "mbti"
 }
+
