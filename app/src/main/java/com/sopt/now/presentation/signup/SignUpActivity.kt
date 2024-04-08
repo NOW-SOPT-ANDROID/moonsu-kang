@@ -4,6 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import com.sopt.now.R
 import com.sopt.now.databinding.ActivitySignUpBinding
 import com.sopt.now.model.User
 import com.sopt.now.utils.snackBar
@@ -11,6 +12,9 @@ import com.sopt.now.utils.toast
 
 
 class SignUpActivity : AppCompatActivity() {
+    companion object {
+        const val USER_DATA = "user_data"
+    }
     private val binding by lazy { ActivitySignUpBinding.inflate(layoutInflater) }
     /**
      * binding은 Activity의 생명주기 동안에 한 번만 초기화하면 된다.
@@ -42,9 +46,9 @@ class SignUpActivity : AppCompatActivity() {
         viewModel.signUpResult.observe(this) { validationResult ->
             if (validationResult == null) {
                 viewModel.user.value?.let { user ->
-                    toast("회원가입을 완료했습니다!")
+                    toast(R.string.signup_success)
                     val resultIntent = Intent().apply {
-                        putExtra("user_data", user) // User 객체를 Intent에 포함
+                        putExtra(USER_DATA, user) // User 객체를 Intent에 포함
                     }
                     setResult(RESULT_OK, resultIntent)
                     finish()
