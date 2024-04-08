@@ -20,4 +20,8 @@
     <string name="login_pwd_hint">비밀번호를 입력해주세요</string>
     <string name="login_button_sign">로그인 하기</string>
     <string name="login_button_signup">회원가입</string>
+
+    <string name="signup_success">회원가입에 성공했습니다..</string>
+    <string name="login_success">로그인에 성공했습니다..</string>
+    <string name="login_failed">로그인에 실패했습니다..</string>
 </resources>
