@@ -5,10 +5,10 @@ import android.os.Bundle
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import com.sopt.now.MainActivity
 import com.sopt.now.R
 import com.sopt.now.databinding.ActivityLoginBinding
 import com.sopt.now.model.User
-import com.sopt.now.presentation.main.MainActivity
 import com.sopt.now.presentation.signup.SignUpActivity
 import com.sopt.now.utils.snackBar
 import com.sopt.now.utils.toast
@@ -64,7 +64,7 @@ class LoginActivity : AppCompatActivity() {
 
         if (viewModel.loginValid(inputId, inputPwd)) {
             toast(R.string.login_success)
-            navigateToMainActivity()
+            navigateToHomeActivity()
         } else {
             snackBar("아이디 혹은 비밀번호를 다시 확인해주세요.")
         }
@@ -74,7 +74,7 @@ class LoginActivity : AppCompatActivity() {
         signupResultLauncher.launch(Intent(this@LoginActivity, SignUpActivity::class.java))
     }
 
-    private fun navigateToMainActivity() {
+    private fun navigateToHomeActivity() {
         val intent = Intent(this@LoginActivity, MainActivity::class.java).apply {
             putExtra(USER_DATA, viewModel.userInfo.value)
         }
