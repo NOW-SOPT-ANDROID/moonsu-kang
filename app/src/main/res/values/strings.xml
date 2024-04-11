@@ -1,8 +1,9 @@
 <resources>
     <string name="app_name">MoonsuKang</string>
-    <!-- signup -->
+    <!--main-->
     <string name="main_name">강문수</string>
     <string name="main_explain">그게 바로 나야 👀</string>
+    <!-- signup-->
     <string name="signup_title">SIGN UP</string>
     <string name="signup_id">ID</string>
     <string name="signup_id_hint">id를 입력하세요</string>
@@ -13,6 +14,8 @@
     <string name="signup_mbti">MBTI</string>
     <string name="signup_mbti_hint">MBTI를 입력하세요</string>
     <string name="signup_complete">회원가입 하기</string>
+    <string name="signup_success">회원가입에 성공했습니다..</string>
+    <!--login-->
     <string name="login_title">Welcome to SOPT</string>
     <string name="login_id">ID</string>
     <string name="login_id_hint">아이디를 입력해주세요</string>
@@ -20,8 +23,17 @@
     <string name="login_pwd_hint">비밀번호를 입력해주세요</string>
     <string name="login_button_sign">로그인 하기</string>
     <string name="login_button_signup">회원가입</string>
-
-    <string name="signup_success">회원가입에 성공했습니다..</string>
     <string name="login_success">로그인에 성공했습니다..</string>
     <string name="login_failed">로그인에 실패했습니다..</string>
+    <!--menu-->
+    <string name="menu_home">홈</string>
+    <string name="menu_mypage">마이페이지</string>
+    <string name="menu_search">검색</string>
+
+    <string name="item_friend_description">현진아 뭐라고? 아~ 파트장 하고 싶다고?</string>
+    <string name="item_friend_music">노래 제목이 들어가</string>
+    
+    <string name="mypage_failed_get_user">정보를 가지고 오는데 실패 했습니다..</string>
+
+
 </resources>
