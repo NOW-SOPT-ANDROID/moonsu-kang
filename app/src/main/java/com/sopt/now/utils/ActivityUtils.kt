@@ -6,11 +6,15 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.annotation.StringRes
 import androidx.core.content.ContextCompat
+import androidx.fragment.app.Fragment
 import com.google.android.material.snackbar.Snackbar
 
 // 토스트 메시지
 fun Activity.toast(@StringRes messageResId: Int, duration: Int = Toast.LENGTH_SHORT) {
     Toast.makeText(this, getString(messageResId), duration).show()
+}
+fun Fragment.toast(@StringRes messageResId: Int, duration: Int = Toast.LENGTH_SHORT) {
+    Toast.makeText(requireContext(), getString(messageResId), duration).show()
 }
 
 // 스낵바 메시지
