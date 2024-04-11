@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".presentation.main.MainActivity">
+    android:layout_height="match_parent">
 
     <ImageView
-        android:id="@+id/iv_main_profile"
+        android:id="@+id/iv_mypage_profile"
         android:layout_width="60dp"
         android:layout_height="60dp"
         android:layout_marginStart="20dp"
@@ -18,20 +18,20 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/tv_main_nickname"
+        android:id="@+id/tv_mypage_nickname"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="10dp"
         android:textSize="20sp"
         android:textStyle="bold"
         android:textColor="@color/black"
-        app:layout_constraintBottom_toBottomOf="@id/iv_main_profile"
-        app:layout_constraintStart_toEndOf="@id/iv_main_profile"
-        app:layout_constraintTop_toTopOf="@id/iv_main_profile"
+        app:layout_constraintBottom_toBottomOf="@id/iv_mypage_profile"
+        app:layout_constraintStart_toEndOf="@id/iv_mypage_profile"
+        app:layout_constraintTop_toTopOf="@id/iv_mypage_profile"
         android:text="@string/main_name"/>
 
     <TextView
-        android:id="@+id/tv_main_comment"
+        android:id="@+id/tv_mypage_comment"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
@@ -41,12 +41,12 @@
         android:text="@string/main_explain"
         android:textSize="20sp"
         android:textColor="@color/black"
-        app:layout_constraintStart_toStartOf="@id/iv_main_profile"
+        app:layout_constraintStart_toStartOf="@id/iv_mypage_profile"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/iv_main_profile" />
+        app:layout_constraintTop_toBottomOf="@id/iv_mypage_profile" />
 
     <TextView
-        android:id="@+id/tv_main_id_title"
+        android:id="@+id/tv_mypage_id_title"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
@@ -55,10 +55,10 @@
         android:textSize="30sp"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tv_main_comment" />
+        app:layout_constraintTop_toBottomOf="@id/tv_mypage_comment" />
 
     <TextView
-        android:id="@+id/tv_main_id_value"
+        android:id="@+id/tv_mypage_id_value"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
@@ -66,11 +66,11 @@
         android:textSize="20sp"
         android:textColor="@color/gray"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tv_main_id_title"
+        app:layout_constraintTop_toBottomOf="@id/tv_mypage_id_title"
         tools:text="sopt_android" />
 
     <TextView
-        android:id="@+id/tv_main_pwd"
+        android:id="@+id/tv_mypage_pwd"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
@@ -79,10 +79,10 @@
         android:textSize="30sp"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tv_main_id_value" />
+        app:layout_constraintTop_toBottomOf="@id/tv_mypage_id_value" />
 
     <TextView
-        android:id="@+id/tv_main_pwd_value"
+        android:id="@+id/tv_mypage_pwd_value"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
@@ -90,23 +90,23 @@
         android:textSize="20sp"
         android:textColor="@color/gray"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tv_main_pwd"
+        app:layout_constraintTop_toBottomOf="@id/tv_mypage_pwd"
         tools:text="1234567" />
 
     <TextView
-        android:id="@+id/tv_main_mbti"
+        android:id="@+id/tv_mypage_mbti"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
         android:layout_marginTop="30dp"
-        android:text="MBTI"
+        android:text="@string/signup_mbti"
         android:textSize="30sp"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tv_main_pwd_value" />
+        app:layout_constraintTop_toBottomOf="@id/tv_mypage_pwd_value" />
 
     <TextView
-        android:id="@+id/tv_main_mbti_value"
+        android:id="@+id/tv_mypage_mbti_value"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
@@ -114,7 +114,7 @@
         android:textSize="20sp"
         android:textColor="@color/gray"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tv_main_mbti"
+        app:layout_constraintTop_toBottomOf="@id/tv_mypage_mbti"
         tools:text="IENSFTPJ" />
 
 
