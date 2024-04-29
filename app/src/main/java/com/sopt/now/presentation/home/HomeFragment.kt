@@ -26,9 +26,10 @@ class HomeFragment : Fragment() {
         return binding.root
     }
 
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        setupViewModelObservers()
+        observeUserInfo()
         initAdapter()
     }
 
@@ -41,32 +42,27 @@ class HomeFragment : Fragment() {
 
     // ViewModel의 LiveData를 관찰하여 UI 업데이트
     // as?를 사용하는 것을 권장
-    private fun setupViewModelObservers() {
+    private fun observeUserInfo() {
         getUserInfo()
+        // UserAdapter 초기화, 사용자 정보 설정
         viewModel.userInfo.observe(viewLifecycleOwner) { user ->
-            // UserAdapter 초기화, 사용자 정보 설정
             (binding.rvHome.adapter as? ConcatAdapter)?.adapters?.filterIsInstance<UserAdapter>()?.forEach {
                 it.setUser(user)
             }
         }
-
-        viewModel.mockFriendsInfo.observe(viewLifecycleOwner) { friends ->
-            // FriendAdapter 초기화, 친구 목록 설정
-            (binding.rvHome.adapter as? ConcatAdapter)?.adapters?.filterIsInstance<FriendAdapter>()?.forEach {
-                it.setFriendList(friends)
-            }
-        }
-        /**
-         * filterIsInstance<UserAdapter>() ~ 가 뭔데?
-         * 처리 로직은 ConcatAdapter 내의 어댑터 중에서 각 해당하는 Adapter 인스턴스만 찾아내고,
-         * 알맞은 메서드를 호출해서 데이터 설정한다고 생각하면 된다
-         * */
     }
+
+    /**
+     * filterIsInstance<UserAdapter>() ~ 가 뭘까요?
+     * 처리 로직은 ConcatAdapter 내의 어댑터 중에서 각 해당하는 Adapter 인스턴스만 찾아내고,
+     * 알맞은 메서드를 호출해서 데이터 설정한다고 생각하면 good
+     * */
 
     // 어댑터 초기화하고 RecyclerView에 설정
     private fun initAdapter() {
         val userAdapter = UserAdapter()
         val friendAdapter = FriendAdapter()
+        friendAdapter.setFriendList(viewModel.mockFriendsInfo) // 정적 데이터 이므로 바로 설정
         val concatAdapter = ConcatAdapter(userAdapter, friendAdapter)
         binding.rvHome.apply {
             layoutManager = LinearLayoutManager(context)
