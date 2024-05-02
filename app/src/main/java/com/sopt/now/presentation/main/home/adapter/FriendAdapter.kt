@@ -1,10 +1,10 @@
-package com.sopt.now.adapter
+package com.sopt.now.presentation.main.home.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.sopt.now.databinding.ItemFriendBinding
-import com.sopt.now.model.Friend
+import com.sopt.now.presentation.main.home.model.Friend
 
 class FriendAdapter : RecyclerView.Adapter<FriendViewHolder>() {
     private var friendList: List<Friend> = emptyList()
