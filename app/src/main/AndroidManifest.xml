@@ -15,9 +15,8 @@
 
         <activity android:name=".presentation.signup.SignUpActivity"
             android:exported="false"/>
-        <activity
-            android:name=".presentation.main.MainActivity"
-            android:exported="false" />
+        <activity android:name=".MainActivity"
+            android:exported="false"/>
         <activity
             android:name=".presentation.login.LoginActivity"
             android:exported="true">

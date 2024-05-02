@@ -3,4 +3,13 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
     <color name="gray">#808080</color>
+
+    <!-- 바텀 네비바 컬러 지정-->
+    <color name="bottom_navigation_color">#F4F7FB</color>
+    <color name="bottom_nav_selected_color">#0066FF</color>
+    <color name="bottom_nav_selected_text_color">#0066FF</color>
+    <color name="bottom_nav_unselected_color">#DDDDDD</color>
+    <color name="bottom_nav_unselected_text_color">#DDDDDD</color>
+
+    <color name="naver_clova_green">#05D686</color>
 </resources>
