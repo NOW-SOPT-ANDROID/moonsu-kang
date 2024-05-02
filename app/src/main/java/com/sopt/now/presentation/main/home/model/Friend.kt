@@ -1,4 +1,4 @@
-package com.sopt.now.model
+package com.sopt.now.presentation.main.home.model
 
 import androidx.annotation.DrawableRes
 
