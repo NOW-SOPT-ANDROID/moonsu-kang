@@ -1,18 +1,15 @@
-package com.sopt.now.presentation.home
+package com.sopt.now.presentation.main.home
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.sopt.now.R
-import com.sopt.now.model.Friend
-import com.sopt.now.model.User
+import com.sopt.now.presentation.main.home.model.Friend
 
 class HomeViewModel : ViewModel() {
     // 로그인 정보를 담은 User를 LiveData로 관리
-    private val _userInfo = MutableLiveData<User?>()
-    val userInfo: LiveData<User?> = _userInfo
+//    private val _userInfo = MutableLiveData<User?>()
+//    val userInfo: LiveData<User?> = _userInfo
 
-    val mockFriendsInfo = MutableLiveData(
+    val mockFriendsInfo =
         listOf(
             Friend(profileImage = R.drawable.ic_friend_profile, name = "이유빈", selfDescription = "나 이유빈인데 나보다 재밌는 사람 나와봐", music = "Magnetic"),
             Friend(profileImage = R.drawable.ic_friend_profile, name = "이석찬", selfDescription = "국가 권력급 코드", music = "나는 아픈 건 딱 질색이니까"),
@@ -26,9 +23,9 @@ class HomeViewModel : ViewModel() {
             Friend(profileImage = R.drawable.ic_friend_profile, name = "배찬우", selfDescription = "파워포인트가 목이 없을 때 하는말은? 제..목을 입력해주세요", music = "To. X"),
             Friend(profileImage = R.drawable.ic_friend_profile, name = "박동민", selfDescription = "곽의진...얼굴 재치 실력 모든걸 다 가진 남자... 하지만 밀양박씨 36대손인 나 박동민은 가지지 못했지", music = "한 페이지가 될 수 있게")
         )
-    )
 
-    fun setUserInfo(user: User?) {
-        _userInfo.value = user
-    }
+
+//    fun setUserInfo(user: User?) {
+//        _userInfo.value = user
+//    }
 }
