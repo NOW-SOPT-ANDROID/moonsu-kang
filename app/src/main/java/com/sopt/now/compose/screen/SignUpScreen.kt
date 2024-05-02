@@ -18,6 +18,7 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import com.sopt.now.compose.R
 import com.sopt.now.compose.component.UserInfoInputField
+import com.sopt.now.compose.navigation.NavRoutes
 import com.sopt.now.compose.utils.rememberUserInfoState
 
 
@@ -59,7 +60,7 @@ fun SignUpScreen(navController: NavHostController) {
         Button(
             onClick = {
                 if (userInfoState.validate()) {
-                    navController.navigate("login/${userInfoState.userId.value}/${userInfoState.userPwd.value}/${userInfoState.nickname.value}/${userInfoState.mbti.value}") {
+                    navController.navigate("${NavRoutes.LOGIN}/${userInfoState.userId.value}/${userInfoState.userPwd.value}/${userInfoState.nickname.value}/${userInfoState.mbti.value}") {
                         popUpTo("signup") { inclusive = true }
                     }
                 }

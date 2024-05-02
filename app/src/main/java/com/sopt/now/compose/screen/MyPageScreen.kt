@@ -20,22 +20,19 @@ import androidx.compose.ui.unit.sp
 import com.sopt.now.compose.R
 import com.sopt.now.compose.component.UserInfoSection
 
-
 @Composable
-fun MainScreen(userId: String, userPwd: String, nickname: String, mbti: String) {
-    Column(modifier = Modifier.padding(16.dp)) {
+fun MyPageScreen(userId: String, nickname: String, mbti: String, modifier: Modifier = Modifier) {
+    Column(modifier = modifier.padding(16.dp)) {
         //
         ProfileHeader()
         Spacer(modifier = Modifier.height(16.dp))
 
         // 사용자 정보 섹션
         UserInfoSection(stringResource(id = R.string.signup_id), userId)
-        UserInfoSection(stringResource(id = R.string.signup_pwd), userPwd)
         UserInfoSection(stringResource(id = R.string.signup_nickname), nickname)
         UserInfoSection(stringResource(id = R.string.signup_mbti), mbti)
     }
 }
-
 @Composable
 fun ProfileHeader() {
     Row(verticalAlignment = Alignment.CenterVertically) {
@@ -60,3 +57,4 @@ fun ProfileHeader() {
         )
     }
 }
+

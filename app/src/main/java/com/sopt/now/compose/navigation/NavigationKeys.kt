@@ -3,7 +3,9 @@ package com.sopt.now.compose.navigation
 object NavRoutes {
     const val SIGN_UP = "signup"
     const val LOGIN = "login"
-    const val MAIN = "main"
+    const val HOME = "home"
+    const val MYPAGE = "mypage"
+    const val SEARCH = "search"
 }
 
 object NavArgs {

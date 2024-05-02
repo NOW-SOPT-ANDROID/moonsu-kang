@@ -24,6 +24,7 @@ import androidx.navigation.NavHostController
 import com.sopt.now.compose.R
 import com.sopt.now.compose.component.ActionButton
 import com.sopt.now.compose.component.InputField
+import com.sopt.now.compose.navigation.NavRoutes
 import com.sopt.now.compose.utils.ToastUtil
 
 @Composable
@@ -61,13 +62,12 @@ fun LoginScreen(
             text = stringResource(id = R.string.login_button_sign),
             onClick = {
                 if (userId.isNotEmpty() && userPwd.isNotEmpty() && userId == userIdFromSignUp && userPwd == userPwdFromSignUp) {
-                    ToastUtil.show(context, loginSuccessMessage, Toast.LENGTH_LONG)
-                    navController.navigate("main/$userId/$userPwd/$nicknameFromSignUp/$mbtiFromSignUp") {
-                        // 네비게이션 스택에서 현재까지의 화면을 제거
+                    ToastUtil.show(context, loginSuccessMessage)
+                    navController.navigate("${NavRoutes.HOME}/${userId}/${nicknameFromSignUp}/${mbtiFromSignUp}") {
                         popUpTo("login") { inclusive = true }
                     }
                 } else {
-                    ToastUtil.show(context, loginFailMessage, Toast.LENGTH_LONG)
+                    ToastUtil.show(context, loginFailMessage)
                 }
             }
         )
