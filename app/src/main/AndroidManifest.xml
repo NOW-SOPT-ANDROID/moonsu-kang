@@ -2,6 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
 
+    <uses-permission android:name="android.permission.INTERNET" />
+
     <application
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
@@ -11,14 +13,18 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.NOWSOPTAndroid"
-        tools:targetApi="31">
+        android:usesCleartextTraffic="true"
+        tools:targetApi="31"
+        android:name=".App">
 
-        <activity android:name=".presentation.signup.SignUpActivity"
+<!--        <activity android:name=".TestSignUpActivity"-->
+<!--            android:exported="false"/>-->
+        <activity android:name=".presentation.auth.signup.SignUpActivity"
             android:exported="false"/>
-        <activity android:name=".MainActivity"
+        <activity android:name=".presentation.main.MainActivity"
             android:exported="false"/>
         <activity
-            android:name=".presentation.login.LoginActivity"
+            android:name=".presentation.auth.login.LoginActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
