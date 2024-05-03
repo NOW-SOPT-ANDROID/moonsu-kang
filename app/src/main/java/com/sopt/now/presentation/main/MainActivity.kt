@@ -1,39 +1,53 @@
 package com.sopt.now.presentation.main
 
 import android.os.Bundle
-import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import com.sopt.now.databinding.ActivityMainBinding
-import com.sopt.now.model.User
+import androidx.fragment.app.Fragment
+import com.sopt.now.R
+import com.sopt.now.databinding.ActivityHomeBinding
+import com.sopt.now.presentation.main.home.HomeFragment
+import com.sopt.now.presentation.main.mypage.MyPageFragment
+import com.sopt.now.presentation.main.search.SearchFragment
+import dagger.hilt.android.AndroidEntryPoint
 
+// Fragment의 부모 Activity
+@AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
-    companion object {
-        const val USER_DATA = "user_data"
-    }
-    private val binding by lazy { ActivityMainBinding.inflate(layoutInflater) }
-    private val viewModel: MainViewModel by viewModels()
+
+    private val binding by lazy { ActivityHomeBinding.inflate(layoutInflater) }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
 
-        getUserInfo()
-        initUI()
+        // Activity가 최초 생성될 때만 HomeFragment 초기화하기
+        if (savedInstanceState == null) {
+            replaceFragment(HomeFragment())
+        }
+        setupBottomNavigation()
     }
 
-    private fun getUserInfo() {
-        val user: User? = intent.getParcelableExtra(USER_DATA) // User 객체 받기
-        if (user != null) {
-            viewModel.setUserInfo(user) // ViewModel에 User 객체 적용
+    // Bottom Navigation 클릭 이벤트
+    private fun setupBottomNavigation() {
+        binding.bnvHome.setOnItemSelectedListener { menuItem ->
+            val fragment = when (menuItem.itemId) {
+                R.id.menu_home -> HomeFragment()
+                R.id.menu_search -> SearchFragment()
+                R.id.menu_mypage -> MyPageFragment()
+                else -> null
+            }
+            fragment?.let {
+                replaceFragment(it)
+                true // 명시적 true return
+            } ?: false // Fragment가 null일 경우 false
         }
     }
 
-    private fun initUI() {
-        val user = viewModel.userInfo.value ?: return
-        with(binding) {
-            tvMainNickname.text = user.nickname
-            tvMainIdValue.text = user.id
-            tvMainPwdValue.text = user.pwd
-            tvMainMbtiValue.text = user.mbti
-        }
+    // replaceFragment
+    private fun replaceFragment(fragment: Fragment) {
+        supportFragmentManager.beginTransaction()
+            .replace(R.id.fcv_home, fragment)
+            .commit()
     }
+
 }
