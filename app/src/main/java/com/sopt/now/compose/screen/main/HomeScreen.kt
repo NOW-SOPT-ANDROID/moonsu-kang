@@ -1,4 +1,4 @@
-package com.sopt.now.compose.screen
+package com.sopt.now.compose.screen.main
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
@@ -25,11 +25,11 @@ import com.sopt.now.compose.component.FriendItem
 import com.sopt.now.compose.utils.FriendRepository
 
 @Composable
-fun HomeScreen(nickname: String, mbti: String, modifier: Modifier = Modifier) {
+fun HomeScreen(modifier: Modifier = Modifier) {
     val friends = FriendRepository.friends
     LazyColumn(modifier = modifier.padding(10.dp)) {
         item {
-            UserProfileInfo(nickname, mbti)
+//            UserProfileInfo(nickname, mbti)
         }
         items(friends) { friend ->
             FriendItem(friend)
