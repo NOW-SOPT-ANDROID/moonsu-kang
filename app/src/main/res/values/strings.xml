@@ -11,8 +11,8 @@
     <string name="signup_hint">비밀번호를 입력하세요</string>
     <string name="signup_nickname">닉네임</string>
     <string name="signup_nickname_hint">닉네임을 입력하세요</string>
-    <string name="signup_mbti">MBTI</string>
-    <string name="signup_mbti_hint">MBTI를 입력하세요</string>
+    <string name="signup_phone">전화번호</string>
+    <string name="signup_phone_hint">전화번호를 입력하세요</string>
     <string name="signup_complete">회원가입 하기</string>
     <string name="signup_success">회원가입에 성공했습니다..</string>
     <!--login-->
