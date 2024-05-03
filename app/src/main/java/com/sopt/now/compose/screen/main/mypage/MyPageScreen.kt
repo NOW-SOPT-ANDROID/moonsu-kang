@@ -1,4 +1,4 @@
-package com.sopt.now.compose.screen
+package com.sopt.now.compose.screen.main.mypage
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Column
@@ -10,6 +10,10 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.derivedStateOf
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
@@ -17,20 +21,32 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.sopt.now.compose.R
 import com.sopt.now.compose.component.UserInfoSection
 
 @Composable
-fun MyPageScreen(userId: String, nickname: String, mbti: String, modifier: Modifier = Modifier) {
+fun MyPageScreen(modifier: Modifier = Modifier) {
+    val viewModel: MyPageViewModel = viewModel()
+    val userInfoState = viewModel.userInfoState
+    val isUserInfoLoaded by remember { derivedStateOf { userInfoState.isLoaded } }
+
+    LaunchedEffect(Unit) {
+        viewModel.fetchUserInfo()
+    }
+
     Column(modifier = modifier.padding(16.dp)) {
         //
         ProfileHeader()
         Spacer(modifier = Modifier.height(16.dp))
 
-        // 사용자 정보 섹션
-        UserInfoSection(stringResource(id = R.string.signup_id), userId)
-        UserInfoSection(stringResource(id = R.string.signup_nickname), nickname)
-        UserInfoSection(stringResource(id = R.string.signup_mbti), mbti)
+        if (isUserInfoLoaded) {
+            UserInfoSection(title = "ID", info = userInfoState.authenticationId ?: "")
+            UserInfoSection(title = "Nickname", info = userInfoState.nickname ?: "")
+            UserInfoSection(title = "Phone", info = userInfoState.phone ?: "")
+        } else {
+            Text("Loading user info...")
+        }
     }
 }
 @Composable
