@@ -1,4 +1,4 @@
-package com.sopt.now.compose.screen
+package com.sopt.now.compose.screen.main
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.material3.Text
