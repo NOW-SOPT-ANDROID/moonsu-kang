@@ -16,6 +16,17 @@ fun Activity.toast(@StringRes messageResId: Int, duration: Int = Toast.LENGTH_SH
 fun Fragment.toast(@StringRes messageResId: Int, duration: Int = Toast.LENGTH_SHORT) {
     Toast.makeText(requireContext(), getString(messageResId), duration).show()
 }
+// 토스트 메시지
+fun Activity.toast(message: CharSequence?, duration: Int = Toast.LENGTH_SHORT) {
+    message?.let {
+        Toast.makeText(this, message, duration).show()
+    }
+}
+fun Fragment.toast(message: CharSequence?, duration: Int = Toast.LENGTH_SHORT) {
+    message?.let {
+        Toast.makeText(requireContext(), message, duration).show()
+    }
+}
 
 // 스낵바 메시지
 fun Activity.snackBar(
