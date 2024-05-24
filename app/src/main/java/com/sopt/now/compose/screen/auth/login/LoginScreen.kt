@@ -72,6 +72,14 @@ fun LoginScreen(
                 LaunchedEffect(state.message) {
                     Toast.makeText(context, state.message, Toast.LENGTH_LONG).show()
                 }
+                ActionButton(
+                    text = stringResource(id = R.string.login_button_signin),
+                    onClick = {
+                        if (userId.isNotEmpty() && userPwd.isNotEmpty()) {
+                            viewModel.login(RequestLoginDto(userId, userPwd))
+                        }
+                    }
+                )
             }
             null -> ActionButton(
                 text = stringResource(id = R.string.login_button_signin),
@@ -88,7 +96,6 @@ fun LoginScreen(
         )
     }
 }
-
 
 @Composable
 fun LoginTitle() {
