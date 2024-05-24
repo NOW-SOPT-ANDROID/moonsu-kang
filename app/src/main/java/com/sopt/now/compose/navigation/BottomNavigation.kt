@@ -8,13 +8,13 @@ import androidx.compose.ui.Modifier
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.sopt.now.compose.screen.HomeScreen
-import com.sopt.now.compose.screen.MyPageScreen
-import com.sopt.now.compose.screen.SearchScreen
+import com.sopt.now.compose.screen.main.HomeScreen
+import com.sopt.now.compose.screen.main.mypage.MyPageScreen
+import com.sopt.now.compose.screen.main.SearchScreen
 
 
 @Composable
-fun BottomNavigation(userId: String, nickname: String, mbti: String) {
+fun BottomNavigation() {
     val navController = rememberNavController()
     // 기본적인 구조 구성
     Scaffold(
@@ -24,10 +24,10 @@ fun BottomNavigation(userId: String, nickname: String, mbti: String) {
         // Navigation 구조 정의
         NavHost(navController, startDestination = BottomNavItem.Home.route) {
             composable(BottomNavItem.Home.route) {
-                HomeScreen(nickname, mbti, Modifier.padding(innerPadding))
+                HomeScreen(Modifier.padding(innerPadding))
             }
             composable(BottomNavItem.Mypage.route) {
-                MyPageScreen(userId, nickname, mbti, Modifier.padding(innerPadding))
+                MyPageScreen(Modifier.padding(innerPadding))
             }
             composable(BottomNavItem.Search.route) {
                 SearchScreen(Modifier.padding(innerPadding))

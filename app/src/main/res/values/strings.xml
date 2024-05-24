@@ -10,15 +10,15 @@
     <string name="signup_pwd_hint">비밀번호를 입력하세요</string>
     <string name="signup_nickname">닉네임</string>
     <string name="signup_nickname_hint">닉네임을 입력하세요</string>
-    <string name="signup_mbti">MBTI</string>
-    <string name="signup_mbti_hint">MBTI를 입력하세요</string>
+    <string name="signup_phone">전화번호</string>
+    <string name="signup_phone_hint">전화번호를 입력하세요</string>
     <string name="signup_complete">회원가입 하기</string>
     <string name="login_title">Welcome to SOPT</string>
     <string name="login_id">ID</string>
     <string name="login_id_hint">아이디를 입력해주세요</string>
     <string name="login_pwd">비밀번호</string>
     <string name="login_pwd_hint">비밀번호를 입력해주세요</string>
-    <string name="login_button_sign">로그인 하기</string>
+    <string name="login_button_signin">로그인 하기</string>
     <string name="login_button_signup">회원가입</string>
 
     <string name="login_success">로그인에 성공했습니다..</string>

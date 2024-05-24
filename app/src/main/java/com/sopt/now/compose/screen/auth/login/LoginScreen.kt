@@ -1,4 +1,4 @@
-package com.sopt.now.compose.screen
+package com.sopt.now.compose.screen.auth.login
 
 import android.widget.Toast
 import androidx.compose.foundation.layout.Column
@@ -6,9 +6,12 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
@@ -20,31 +23,27 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import com.sopt.now.compose.R
 import com.sopt.now.compose.component.ActionButton
 import com.sopt.now.compose.component.InputField
 import com.sopt.now.compose.navigation.NavRoutes
-import com.sopt.now.compose.utils.ToastUtil
+import com.sopt.now.data.model.RequestLoginDto
 
 @Composable
 fun LoginScreen(
-    navController: NavHostController,
-    userIdFromSignUp: String = "",
-    userPwdFromSignUp: String = "",
-    nicknameFromSignUp: String = "",
-    mbtiFromSignUp: String = ""
-
+    navController: NavHostController
 ) {
-    var userId by rememberSaveable { mutableStateOf(userIdFromSignUp) }
-    var userPwd by rememberSaveable { mutableStateOf(userPwdFromSignUp) }
+    val viewModel: LoginViewModel = viewModel()
+    var userId by rememberSaveable { mutableStateOf("") }
+    var userPwd by rememberSaveable { mutableStateOf("") }
+    val loginState = viewModel.loginState.observeAsState()
     val context = LocalContext.current // to use ToastMessage
-    val loginSuccessMessage = stringResource(id = R.string.login_success)
-    val loginFailMessage = stringResource(id = R.string.login_failed)
-
 
     Column(modifier = Modifier.padding(16.dp)) {
         LoginTitle()
+
         InputField(
             label = stringResource(id = R.string.login_id),
             value = userId,
@@ -58,25 +57,38 @@ fun LoginScreen(
             hint = stringResource(id = R.string.login_pwd_hint),
             isPassword = true
         )
-        ActionButton(
-            text = stringResource(id = R.string.login_button_sign),
-            onClick = {
-                if (userId.isNotEmpty() && userPwd.isNotEmpty() && userId == userIdFromSignUp && userPwd == userPwdFromSignUp) {
-                    ToastUtil.show(context, loginSuccessMessage)
-                    navController.navigate("${NavRoutes.HOME}/${userId}/${nicknameFromSignUp}/${mbtiFromSignUp}") {
-                        popUpTo("login") { inclusive = true }
+
+        when (val state = loginState.value) {
+            is LoginState.Loading -> CircularProgressIndicator()
+            is LoginState.Success -> {
+                LaunchedEffect(state.message) {
+                    Toast.makeText(context, state.message, Toast.LENGTH_LONG).show()
+                    navController.navigate(NavRoutes.HOME) {
+                        popUpTo(NavRoutes.LOGIN) { inclusive = true }
                     }
-                } else {
-                    ToastUtil.show(context, loginFailMessage)
                 }
             }
-        )
+            is LoginState.Error -> {
+                LaunchedEffect(state.message) {
+                    Toast.makeText(context, state.message, Toast.LENGTH_LONG).show()
+                }
+            }
+            null -> ActionButton(
+                text = stringResource(id = R.string.login_button_signin),
+                onClick = {
+                    if (userId.isNotEmpty() && userPwd.isNotEmpty()) {
+                        viewModel.login(RequestLoginDto(userId, userPwd))
+                    }
+                }
+            )
+        }
         ActionButton(
             text = stringResource(id = R.string.login_button_signup),
-            onClick = { navController.navigate("signup") }
+            onClick = { navController.navigate(NavRoutes.SIGN_UP) }
         )
     }
 }
+
 
 @Composable
 fun LoginTitle() {
