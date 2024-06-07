@@ -17,34 +17,44 @@ import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import com.sopt.now.ServicePool
 import com.sopt.now.compose.R
 import com.sopt.now.compose.component.UserInfoSection
+import com.sopt.now.compose.repositoryimpl.UserInfoRepositoryImpl
+import com.sopt.now.compose.utils.ToastUtil.toast
 
 @Composable
 fun MyPageScreen(modifier: Modifier = Modifier) {
-    val viewModel: MyPageViewModel = viewModel()
+    val authService = ServicePool.authService
+    val userInfoRepository = UserInfoRepositoryImpl(authService)
+    val viewModel: MyPageViewModel = viewModel(factory = MyPageViewModelFactory(userInfoRepository))
+
     val userInfoState = viewModel.userInfoState
     val isUserInfoLoaded by remember { derivedStateOf { userInfoState.isLoaded } }
     val statusMessage by viewModel.statusMessage.observeAsState()
+    val context = LocalContext.current
 
     LaunchedEffect(Unit) {
-        viewModel.fetchUserInfo()
+        viewModel.getUserInfo()
+    }
+
+    LaunchedEffect(statusMessage) {
+        statusMessage?.let {
+            toast(context, it)
+        }
     }
 
     Column(modifier = modifier.padding(16.dp)) {
         ProfileHeader()
         Spacer(modifier = Modifier.height(16.dp))
 
-        statusMessage?.let {
-            Text(it, color = Color.Red)
-        }
         if (isUserInfoLoaded) {
             UserInfoSection(title = "ID", info = userInfoState.authenticationId ?: "")
             UserInfoSection(title = "Nickname", info = userInfoState.nickname ?: "")
@@ -54,6 +64,8 @@ fun MyPageScreen(modifier: Modifier = Modifier) {
         }
     }
 }
+
+
 @Composable
 fun ProfileHeader() {
     Row(verticalAlignment = Alignment.CenterVertically) {

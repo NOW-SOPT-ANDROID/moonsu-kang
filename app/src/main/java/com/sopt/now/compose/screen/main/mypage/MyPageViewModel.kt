@@ -3,41 +3,36 @@ package com.sopt.now.compose.screen.main.mypage
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.sopt.now.ServicePool
 import com.sopt.now.compose.MemberIdInterceptor
+import com.sopt.now.compose.repository.UserInfoRepository
 import com.sopt.now.data.model.ResponseUserInfoDto
+import kotlinx.coroutines.launch
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class MyPageViewModel : ViewModel() {
+class MyPageViewModel(
+    private val userInfoRepository: UserInfoRepository
+) : ViewModel() {
     val userInfoState = UserInfoState()
     private val _statusMessage = MutableLiveData<String>()
     val statusMessage: LiveData<String> = _statusMessage
 
-    fun fetchUserInfo() {
-        val memberId = MemberIdInterceptor.memberId
-        if (memberId == null) {
-            _statusMessage.postValue("Member ID not found")
-            return
-        }
-
-        ServicePool.authService.getUserInfo(memberId).enqueue(object : Callback<ResponseUserInfoDto> {
-            override fun onResponse(call: Call<ResponseUserInfoDto>, response: Response<ResponseUserInfoDto>) {
-                if (response.isSuccessful && response.body()?.code == 200) {
-                    response.body()?.data?.let { data ->
-                        userInfoState.authenticationId = data.authenticationId
-                        userInfoState.nickname = data.nickname
-                        userInfoState.phone = data.phone
-                    }
-                } else {
-                    _statusMessage.postValue("회원정보 조회 실패: ${response.errorBody()?.string() ?: "Unknown error"}")
+    fun getUserInfo() {
+        viewModelScope.launch {
+            val result = userInfoRepository.getUserInfo()
+            if (result.isSuccess) {
+                result.getOrNull()?.data?.let { data ->
+                    userInfoState.authenticationId = data.authenticationId
+                    userInfoState.nickname = data.nickname
+                    userInfoState.phone = data.phone
                 }
+                _statusMessage.postValue("사용자 정보 조회 성공")
+            } else {
+                _statusMessage.postValue("로드 실패: ${result.exceptionOrNull()?.message}")
             }
-
-            override fun onFailure(call: Call<ResponseUserInfoDto>, t: Throwable) {
-                _statusMessage.postValue("네트워크 오류: ${t.message}")
-            }
-        })
+        }
     }
 }
