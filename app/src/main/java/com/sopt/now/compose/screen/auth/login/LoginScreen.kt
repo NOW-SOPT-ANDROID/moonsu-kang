@@ -1,6 +1,5 @@
 package com.sopt.now.compose.screen.auth.login
 
-import android.widget.Toast
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -25,21 +24,27 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
+import com.sopt.now.ServicePool
 import com.sopt.now.compose.R
 import com.sopt.now.compose.component.ActionButton
 import com.sopt.now.compose.component.InputField
 import com.sopt.now.compose.navigation.NavRoutes
+import com.sopt.now.compose.repositoryimpl.LoginRepositoryImpl
+import com.sopt.now.compose.utils.ToastUtil.toast
 import com.sopt.now.data.model.RequestLoginDto
 
 @Composable
 fun LoginScreen(
     navController: NavHostController
 ) {
-    val viewModel: LoginViewModel = viewModel()
+    val context = LocalContext.current
+    val authService = ServicePool.authService
+    val loginRepository = LoginRepositoryImpl(authService)
+    val viewModel: LoginViewModel = viewModel(factory = LoginViewModelFactory(loginRepository))
+
     var userId by rememberSaveable { mutableStateOf("") }
     var userPwd by rememberSaveable { mutableStateOf("") }
-    val loginState = viewModel.loginState.observeAsState()
-    val context = LocalContext.current // to use ToastMessage
+    val loginState by viewModel.loginState.observeAsState()
 
     Column(modifier = Modifier.padding(16.dp)) {
         LoginTitle()
@@ -58,11 +63,11 @@ fun LoginScreen(
             isPassword = true
         )
 
-        when (val state = loginState.value) {
+        when (val state = loginState) {
             is LoginState.Loading -> CircularProgressIndicator()
             is LoginState.Success -> {
                 LaunchedEffect(state.message) {
-                    Toast.makeText(context, state.message, Toast.LENGTH_LONG).show()
+                    toast(context, state.message)
                     navController.navigate(NavRoutes.HOME) {
                         popUpTo(NavRoutes.LOGIN) { inclusive = true }
                     }
@@ -70,7 +75,7 @@ fun LoginScreen(
             }
             is LoginState.Error -> {
                 LaunchedEffect(state.message) {
-                    Toast.makeText(context, state.message, Toast.LENGTH_LONG).show()
+                    toast(context, state.message)
                 }
                 ActionButton(
                     text = stringResource(id = R.string.login_button_signin),
@@ -96,6 +101,7 @@ fun LoginScreen(
         )
     }
 }
+
 
 @Composable
 fun LoginTitle() {

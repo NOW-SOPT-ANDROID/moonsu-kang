@@ -1,6 +1,5 @@
 package com.sopt.now.compose.screen.auth.signup
 
-import android.widget.Toast
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -11,6 +10,7 @@ import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -22,18 +22,26 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
+import com.sopt.now.ServicePool
 import com.sopt.now.compose.R
 import com.sopt.now.compose.component.UserInfoInputField
 import com.sopt.now.compose.navigation.NavRoutes
+import com.sopt.now.compose.repositoryimpl.SignUpRepositoryImpl
+import com.sopt.now.compose.utils.ToastUtil.toast
 import com.sopt.now.compose.utils.rememberUserInfoState
 import com.sopt.now.data.model.RequestSignUpDto
 
 @Composable
-fun SignUpScreen(navController: NavHostController) {
-    val viewModel: SignUpViewModel = viewModel()
-    val userInfoState = rememberUserInfoState()
-    val signUpState = viewModel.signUpState.observeAsState()
+fun SignUpScreen(
+    navController: NavHostController
+) {
     val context = LocalContext.current // to use ToastMessage
+    val authService = ServicePool.authService
+    val signUpRepository = SignUpRepositoryImpl(authService)
+    val viewModel: SignUpViewModel = viewModel(factory = SignUpViewModelFactory(signUpRepository))
+
+    val userInfoState = rememberUserInfoState()
+    val signUpState by viewModel.signUpState.observeAsState()
 
 
     Column(modifier = Modifier.padding(16.dp)) {
@@ -67,19 +75,19 @@ fun SignUpScreen(navController: NavHostController) {
 
         Spacer(modifier = Modifier.height(16.dp))
 
-        when (val state = signUpState.value) {
+        when (signUpState) {
             is SignUpState.Loading -> CircularProgressIndicator()
             is SignUpState.Success -> {
-                LaunchedEffect(state.message) {
-                    Toast.makeText(context, state.message, Toast.LENGTH_LONG).show()
+                LaunchedEffect(true) {
+                    toast(context, (signUpState as SignUpState.Success).message)
                     navController.navigate(NavRoutes.LOGIN) {
                         popUpTo(NavRoutes.SIGN_UP) { inclusive = true }
                     }
                 }
             }
             is SignUpState.Error -> {
-                LaunchedEffect(state.message) {
-                    Toast.makeText(context, state.message, Toast.LENGTH_LONG).show()
+                LaunchedEffect(true) {
+                    toast(context, (signUpState as SignUpState.Error).message)
                 }
             }
             null -> {
@@ -103,6 +111,7 @@ fun SignUpScreen(navController: NavHostController) {
         }
     }
 }
+
 
 @Composable
 fun TitleSection(title: String) {
